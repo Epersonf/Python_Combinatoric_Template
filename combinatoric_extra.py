@@ -2,19 +2,22 @@ from itertools import permutations, product, combinations, combinations_with_rep
 
 
 def c(n: int, k: int) -> int:
-    return len(list(combinations(list(range(0, n)), k)))
+    return p(n, k) // factorial(k)
 
 
 def p(n: int, k: int) -> int:
-    return len(list(permutations(list(range(0, n)), k)))
+    count = 1
+    for i in range(k):
+        count *= n - i
+    return count
 
 
 def cr(n: int, k: int) -> int:
-    return len(list(combinations_with_replacement(list(range(0, n)), k)))
+    return factorial(k + (n - 1)) // (factorial(k) * factorial(n - 1))
 
 
 def pr(n: int, k: int) -> int:
-    return len(list(product(list(range(0, n)), repeat=k)))
+    return n ** k
 
 
 def factorial(n: int) -> int:
