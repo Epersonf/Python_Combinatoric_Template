@@ -15,3 +15,9 @@ def cr(n: int, k: int) -> int:
 
 def pr(n: int, k: int) -> int:
     return len(list(product(list(range(0, n)), repeat=k)))
+
+
+def factorial(n: int) -> int:
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
