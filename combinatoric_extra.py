@@ -1,13 +1,17 @@
-from itertools import permutations, combinations, combinations_with_replacement
+from itertools import permutations, product, combinations, combinations_with_replacement
 
 
 def c(n: int, k: int) -> int:
     return len(list(combinations(list(range(0, n)), k)))
 
 
-def a(n: int, k: int) -> int:
+def p(n: int, k: int) -> int:
     return len(list(permutations(list(range(0, n)), k)))
 
 
 def cr(n: int, k: int) -> int:
     return len(list(combinations_with_replacement(list(range(0, n)), k)))
+
+
+def pr(n: int, k: int) -> int:
+    return len(list(product(list(range(0, n)), repeat=k)))
