@@ -1,4 +1,5 @@
-from itertools import permutations, product, combinations, combinations_with_replacement
+from collections import Callable
+from typing import List
 
 
 def c(n: int, k: int) -> int:
@@ -22,3 +23,15 @@ def pr(n: int, k: int) -> int:
 
 def factorial(n: int) -> int:
     return 1 if n <= 1 else n * factorial(n - 1)
+
+
+def calculate_probability_function(possibilities: List, x_func: Callable, probability: bool = True) -> dict:
+    dic: dict = {}
+
+    for pos in possibilities:
+        sum_n: str = x_func(pos)
+        if sum_n not in dic:
+            dic[sum_n] = 0
+        dic[sum_n] += 1/len(possibilities) if probability else 1
+
+    return dic
