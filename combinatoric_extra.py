@@ -41,7 +41,7 @@ def prob_distribution(possibilities: List, x_func: Callable, probability: bool =
 def expected_value(prob_dist: dict) -> float:
     sum_exp = 0
     for key in prob_dist:
-        sum_exp += int(key) * prob_dist[key]
+        sum_exp += float(key) * prob_dist[key]
     return sum_exp
 
 
@@ -49,9 +49,18 @@ def variance(prob_dist: dict) -> float:
     exp_value = expected_value(prob_dist)
     sum_exp = 0
     for key in prob_dist:
-        sum_exp += int(key)**2 * prob_dist[key]
+        sum_exp += float(key)**2 * prob_dist[key]
     return sum_exp - exp_value**2
 
 
 def standard_deviation(prob_dist: dict) -> float:
     return math.sqrt(variance(prob_dist))
+
+
+def coefficient_of_variation(prob_dist: dict) -> float:
+    exp_value = expected_value(prob_dist)
+    sum_exp = 0
+    for key in prob_dist:
+        sum_exp += float(key) ** 2 * prob_dist[key]
+    dp = math.sqrt(sum_exp - exp_value ** 2)
+    return dp/exp_value
