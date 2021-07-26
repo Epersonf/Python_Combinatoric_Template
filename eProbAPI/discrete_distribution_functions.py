@@ -11,6 +11,13 @@ def binomial(n: int, p: float) -> ProbFunction:
     )
 
 
+def geometric(p: int):
+    return ProbFunction(
+        lambda k: p * (1 - p)**(k - 1),
+        1/p,
+        (1 - p)/(p**2)
+    )
+
 def hyper_geometric(N: int, r: int, n: int) -> ProbFunction:
     p = r/N
     return ProbFunction(

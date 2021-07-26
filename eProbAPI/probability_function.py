@@ -7,12 +7,14 @@ from eProbAPI.discrete_prob_function_util import expected_value, variance
 
 class ProbFunction:
 
-    def __init__(self, func: Callable, exp_value: float, variance_value: float):
+    def __init__(self, func: Callable, exp_value: float, variance_value: float, is_cumulative: bool = False):
         self.func = func
-        self.expected_value = exp_value
-        self.variance = variance_value
-        self.standard_deviation = math.sqrt(variance_value)
-        self.coefficient_of_variation = self.standard_deviation / self.expected_value
+        if not is_cumulative:
+            self.mean = exp_value
+            self.variance = variance_value
+            self.standard_deviation = math.sqrt(abs(variance_value))
+            if self.mean != 0:
+                self.coefficient_of_variation = self.standard_deviation / self.mean
 
     def invoke(self, x):
         return self.func(x)
@@ -27,6 +29,25 @@ class ProbFunction:
                 dic[sum_n] = 0
             dic[sum_n] += 1 / len(possibilities)
 
-        dic = collections.OrderedDict(sorted(dic.items()))
+        return ProbFunction.create_from_dict(dic)
 
-        return ProbFunction(lambda x: dic[x] if x in dic else 0, expected_value(dic), variance(dic))
+    @staticmethod
+    def create_from_dict(dic: dict):
+        d = collections.OrderedDict(sorted(dic.items()))
+        return ProbFunction(lambda x: d[x] if x in d else 0, expected_value(d), variance(d))
+
+    @staticmethod
+    def create_from_cumulative_dict(dic: dict):
+        d = {}
+        dic = collections.OrderedDict(sorted(dic.items()))
+        for key in dic:
+            previous = int(key) - 1
+            if previous in dic:
+                d[key] = dic[key] - dic[previous]
+            elif str(previous) in dic:
+                d[key] = dic[key] - dic[str(previous)]
+            else:
+                d[key] = dic[key]
+        return ProbFunction.create_from_dict(d)
+
+
