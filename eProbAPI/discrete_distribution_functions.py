@@ -18,6 +18,7 @@ def geometric(p: int):
         (1 - p)/(p**2)
     )
 
+
 def hyper_geometric(N: int, r: int, n: int) -> ProbFunction:
     p = r/N
     return ProbFunction(
