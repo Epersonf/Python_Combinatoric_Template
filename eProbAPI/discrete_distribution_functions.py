@@ -1,6 +1,6 @@
 import math
-from ProbAPI.combinatoric_extra import c, factorial
-from ProbAPI.probability_function import ProbFunction
+from eProbAPI.combinatoric_extra import c, factorial
+from eProbAPI.probability_function import ProbFunction
 
 
 def binomial(n: int, p: float) -> ProbFunction:

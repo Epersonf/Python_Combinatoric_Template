@@ -2,7 +2,7 @@ import math
 from typing import Callable, List
 import collections
 
-from ProbAPI.discrete_prob_function_util import expected_value, variance
+from eProbAPI.discrete_prob_function_util import expected_value, variance
 
 
 class ProbFunction:
