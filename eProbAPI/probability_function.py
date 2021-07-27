@@ -19,6 +19,12 @@ class ProbFunction:
     def invoke(self, x):
         return self.func(x)
 
+    def accumulate(self, keys: List):
+        s = 0
+        for key in keys:
+            s += self.invoke(key)
+        return s
+
     def mean_y(self, coefficient_y: float, sum_y: float):
         return coefficient_y * self.mean + sum_y
 
