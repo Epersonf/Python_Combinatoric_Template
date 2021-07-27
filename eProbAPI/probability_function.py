@@ -19,6 +19,15 @@ class ProbFunction:
     def invoke(self, x):
         return self.func(x)
 
+    def mean_y(self, coefficient_y: float, sum_y: float):
+        return coefficient_y * self.mean + sum_y
+
+    def variance_y(self, coefficient_y: float, sum_y: float):
+        return coefficient_y**2 * self.variance
+
+    def standard_deviation_y(self, coefficient_y: float, sum_y: float):
+        return math.fabs(coefficient_y) * self.standard_deviation
+
     @staticmethod
     def create_from_possibilities(possibilities: List[List], x_func: Callable):
         dic: dict = {}
