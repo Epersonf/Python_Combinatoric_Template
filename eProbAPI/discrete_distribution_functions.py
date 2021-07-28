@@ -34,7 +34,9 @@ def hyper_geometric(N: int, K: int, n: int) -> ProbFunction:
 
 def neg_hyper_geometric(N: int, K: int, r: int):
     return ProbFunction(
-        lambda k: c(k + r - 1, k) * c(N - r - k, K - k) / c(N, K),
+        lambda k: c(k + r - 1, k) * c(N - r - k, K - k) / c(N, K)
+        if (0 <= k <= K and 0 <= r <= N - K and 0 <= K <= N)
+        else 0,
         r * K/(N - K + 1),
         r * ((N + 1) * K)/((N - K + 1) * (N - K + 2)) * (1 - (r/(N - K + 1)))
     )
