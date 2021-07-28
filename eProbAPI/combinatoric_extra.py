@@ -19,3 +19,7 @@ def pr(n: int, k: int) -> int:
 
 def factorial(n: int) -> int:
     return 1 if n <= 1 else n * factorial(n - 1)
+
+
+def to_fraction(f: float) -> tuple[int, int]:
+    return float.as_integer_ratio(f)
