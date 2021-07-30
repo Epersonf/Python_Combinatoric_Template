@@ -1,5 +1,5 @@
 import math
-from eProbAPI.combinatoric_extra import c, factorial
+from eProbAPI.combinatoric_extra import c, p as per, factorial
 from eProbAPI.probability_function import ProbFunction
 
 

@@ -2,36 +2,49 @@ import math
 from typing import Callable, List
 import collections
 
-from eProbAPI.discrete_prob_function_util import expected_value, variance
+from eProbAPI.discrete.discrete_prob_function_util import expected_value, variance
 
 
 class ProbFunction:
 
-    def __init__(self, func: Callable, exp_value: float, variance_value: float, is_cumulative: bool = False):
+    def __init__(self, func: Callable, exp_value: float, variance_value: float, cdf: Callable, integral: Callable or None = None):
         self.func = func
-        if not is_cumulative:
-            self.mean = exp_value
-            self.variance = variance_value
-            self.standard_deviation = math.sqrt(abs(variance_value))
-            if self.mean != 0:
-                self.coefficient_of_variation = self.standard_deviation / self.mean
+        self.mean = exp_value
+        self.variance = variance_value
+        self.standard_deviation = math.sqrt(abs(variance_value))
+        if self.mean != 0:
+            self.coefficient_of_variation = self.standard_deviation / self.mean
+        self.cdf = cdf
+        self.integral = integral
 
-    def invoke(self, x):
+    def invoke(self, x) -> float:
         return self.func(x)
 
-    def accumulate(self, keys: List):
+    def cumulative(self, x) -> float:
+        if self.integral is None:
+            print("No CDF defined, if your function is discrete, use accumulate instead!")
+            return 0
+        return self.cdf(x)
+
+    def integrate(self, a: float, b: float) -> float:
+        if self.integral is None:
+            print("No integral defined, if your function is discrete, use accumulate instead!")
+            return 0
+        return self.integral(b) - self.integral(a)
+
+    def accumulate(self, keys: List) -> int:
         s = 0
         for key in keys:
             s += self.invoke(key)
         return s
 
-    def mean_y(self, coefficient_y: float, sum_y: float):
+    def mean_y(self, coefficient_y: float, sum_y: float) -> float:
         return coefficient_y * self.mean + sum_y
 
-    def variance_y(self, coefficient_y: float):
+    def variance_y(self, coefficient_y: float) -> float:
         return coefficient_y**2 * self.variance
 
-    def standard_deviation_y(self, coefficient_y: float):
+    def standard_deviation_y(self, coefficient_y: float) -> float:
         return math.fabs(coefficient_y) * self.standard_deviation
 
     @staticmethod
