@@ -1,8 +1,10 @@
 import math
 from typing import Callable, List
 import collections
+import sympy as sp
 
 from eProbAPI.discrete.discrete_prob_function_util import expected_value, variance
+from eProbAPI.integral_util.integral_util import calculate_integral
 
 
 class ProbFunction:
@@ -73,5 +75,32 @@ class ProbFunction:
             else:
                 d[key] = dic[key]
         return ProbFunction.create_from_dict(d)
+
+    @staticmethod
+    def create_from_pdf(pdf: str, domain_a: float, domain_b: float, variable: str = "x"):
+        pdf_integral = calculate_integral(pdf, variable)
+
+        expected_value_integral = calculate_integral(f"{variable} * {pdf}", variable)
+        expected_value_x = expected_value_integral(domain_b) - expected_value_integral(domain_a)
+
+        variance_value_integral = calculate_integral(f"({variable}**2 * {pdf})", variable)
+        variance_value_x = variance_value_integral(domain_b) - variance_value_integral(domain_a) - expected_value_x**2
+
+        def cdf(x: float) -> float:
+            if x < domain_a:
+                return 0
+            elif x > domain_b:
+                return 1
+            else:
+                return pdf_integral(x) - pdf_integral(domain_a)
+
+        return ProbFunction(
+            lambda x: eval(pdf.replace(variable, str(x))) if domain_a <= x <= domain_b else 0,
+            expected_value_x,
+            variance_value_x,
+            cdf=cdf
+        )
+
+
 
 
