@@ -7,7 +7,7 @@ from eProbAPI.discrete.discrete_prob_function_util import expected_value, varian
 
 class ProbFunction:
 
-    def __init__(self, func: Callable, exp_value: float, variance_value: float, cdf: Callable, integral: Callable or None = None):
+    def __init__(self, func: Callable, exp_value: float, variance_value: float, cdf: Callable or None):
         self.func = func
         self.mean = exp_value
         self.variance = variance_value
@@ -15,7 +15,6 @@ class ProbFunction:
         if self.mean != 0:
             self.coefficient_of_variation = self.standard_deviation / self.mean
         self.cdf = cdf
-        self.integral = integral
 
     def invoke(self, x) -> float:
         return self.func(x)
