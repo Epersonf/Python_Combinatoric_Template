@@ -7,8 +7,3 @@ from eProbAPI.discrete.discrete_distribution_functions import\
 from eProbAPI.continuous.continuous_distribution_functions import uniform, exponential, normal
 from eProbAPI.probability_function import ProbFunction
 
-prob_func = normal(22.86, 0.0762**2)
-
-greater = prob_func.integrate(22.86 + 0.127, math.inf)
-bellow = prob_func.cumulative(22.86 - 0.127)
-print(greater + bellow)
