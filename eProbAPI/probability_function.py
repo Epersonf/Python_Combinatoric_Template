@@ -20,17 +20,14 @@ class ProbFunction:
     def invoke(self, x) -> float:
         return self.func(x)
 
+    def integrate(self, a: float, b: float):
+        return self.cumulative(b) - self.cumulative(a)
+
     def cumulative(self, x) -> float:
-        if self.integral is None:
+        if self.cdf is None:
             print("No CDF defined, if your function is discrete, use accumulate instead!")
             return 0
         return self.cdf(x)
-
-    def integrate(self, a: float, b: float) -> float:
-        if self.integral is None:
-            print("No integral defined, if your function is discrete, use accumulate instead!")
-            return 0
-        return self.integral(b) - self.integral(a)
 
     def accumulate(self, keys: List) -> int:
         s = 0
