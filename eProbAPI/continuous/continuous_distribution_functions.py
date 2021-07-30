@@ -20,3 +20,14 @@ def exponential(lab: float):
         cdf=lambda x: 1 - math.e**(-lab * x),
         integral=lambda x: -math.e**(-lab * x)
     )
+
+
+def normal(mi: float, variance: float):
+    std_dev = math.sqrt(variance)
+    return ProbFunction(
+        lambda x: (1/(std_dev * math.sqrt(2 * math.pi))) * math.e**((-1/2) * ((x - mi)/std_dev)**2),
+        mi,
+        variance,
+        cdf=lambda x: (1 + math.erf((x - mi)/(std_dev * math.sqrt(2))))/2,
+        integral=lambda x: -math.erf((mi - x)/(math.sqrt(2) * std_dev))/2
+    )
