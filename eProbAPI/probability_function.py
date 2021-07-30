@@ -80,10 +80,10 @@ class ProbFunction:
     def create_from_pdf(pdf: str, domain_a: float, domain_b: float, variable: str = "x"):
         pdf_integral = calculate_integral(pdf, variable)
 
-        expected_value_integral = calculate_integral(f"{variable} * {pdf}", variable)
+        expected_value_integral = calculate_integral(f"({variable}) * ({pdf})", variable)
         expected_value_x = expected_value_integral(domain_b) - expected_value_integral(domain_a)
 
-        variance_value_integral = calculate_integral(f"({variable}**2 * {pdf})", variable)
+        variance_value_integral = calculate_integral(f"(({variable})**2 * ({pdf}))", variable)
         variance_value_x = variance_value_integral(domain_b) - variance_value_integral(domain_a) - expected_value_x**2
 
         def cdf(x: float) -> float:
