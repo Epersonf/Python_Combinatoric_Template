@@ -3,7 +3,7 @@ from eProbAPI.combinatoric_extra import c, p as per, factorial
 from eProbAPI.probability_function import ProbFunction
 
 
-def geometric(p: int):
+def geometric(p: float):
     return neg_binomial(1, p)
 
 

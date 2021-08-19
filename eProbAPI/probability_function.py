@@ -9,7 +9,7 @@ from eProbAPI.integral_util.integral_util import calculate_integral
 
 class ProbFunction:
 
-    def __init__(self, func: Callable, exp_value: float, variance_value: float, cdf: Callable or None=None):
+    def __init__(self, func: Callable, exp_value: float, variance_value: float, cdf: Callable or None = None):
         self.func = func
         self.mean = exp_value
         self.variance = variance_value
@@ -44,6 +44,10 @@ class ProbFunction:
 
     def standard_deviation_y(self, coefficient_y: float) -> float:
         return math.fabs(coefficient_y) * self.standard_deviation
+
+    def confidence_interval(self, confidence_level: float, sample_size: int):
+        conf = confidence_level * self.standard_deviation/math.sqrt(sample_size)
+        return [self.mean - conf, self.mean + conf]
 
     @staticmethod
     def create_from_possibilities(possibilities: List[List], x_func: Callable):
