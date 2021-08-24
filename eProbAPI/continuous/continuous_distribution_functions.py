@@ -20,7 +20,8 @@ def exponential(lab: float):
     )
 
 
-def normal(mi: float, std_dev: float):
+def normal(mi: float, sd: float, n: float = 1):
+    std_dev = sd/math.sqrt(n)
     variance = std_dev**2
     return ProbFunction(
         lambda x: (1/(std_dev * math.sqrt(2 * math.pi))) * math.e**((-1/2) * ((x - mi)/std_dev)**2),
